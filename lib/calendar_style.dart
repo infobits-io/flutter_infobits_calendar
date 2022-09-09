@@ -61,15 +61,19 @@ class CalendarEventStyle {
 
 class CalendarIconsStyle {
   final Widget createIcon;
-  final Widget leftIcon;
-  final Widget rightIcon;
-  final Widget upIcon;
+  final Widget titleNextIcon;
+  final Widget titlePrevIcon;
+  final Widget overviewNextIcon;
+  final Widget overviewPrevIcon;
+  final Widget closeDropdownIcon;
 
   const CalendarIconsStyle({
     this.createIcon = const Icon(Icons.add),
-    this.leftIcon = const Icon(Icons.chevron_left),
-    this.rightIcon = const Icon(Icons.chevron_right),
-    this.upIcon = const Icon(Icons.arrow_drop_up_rounded),
+    this.titlePrevIcon = const Icon(Icons.chevron_left),
+    this.titleNextIcon = const Icon(Icons.chevron_right),
+    this.overviewPrevIcon = const Icon(Icons.chevron_left),
+    this.overviewNextIcon = const Icon(Icons.chevron_right),
+    this.closeDropdownIcon = const Icon(Icons.arrow_drop_up_rounded),
   });
 }
 

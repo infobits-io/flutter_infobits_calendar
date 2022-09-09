@@ -135,7 +135,7 @@ class _CalendarDayViewState<T extends CalendarEvent>
 
               return FutureBuilder<List<CalendarEvent>>(
                   future: widget.eventProvider
-                      .fetchEvents(itemStartDate, itemEndDate),
+                      .fetchEvents(context, itemStartDate, itemEndDate),
                   initialData: const [],
                   builder: (context, snapshot) {
                     return NotificationListener<ScrollNotification>(

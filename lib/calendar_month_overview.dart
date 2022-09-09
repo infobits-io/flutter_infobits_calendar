@@ -140,7 +140,7 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
                         color: calendarStyle.primaryBackgroundColor,
                         padding: const EdgeInsets.symmetric(
                             vertical: 2, horizontal: 10),
-                        child: calendarStyle.icons.leftIcon),
+                        child: calendarStyle.icons.overviewPrevIcon),
                   ),
                 ),
                 GestureDetector(
@@ -151,7 +151,7 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
                         color: calendarStyle.primaryBackgroundColor,
                         padding: const EdgeInsets.symmetric(
                             vertical: 2, horizontal: 10),
-                        child: calendarStyle.icons.rightIcon),
+                        child: calendarStyle.icons.overviewNextIcon),
                   ),
                 )
               ],

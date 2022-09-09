@@ -171,7 +171,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               color: widget.style.primaryBackgroundColor,
-              child: widget.style.icons.leftIcon,
+              child: widget.style.icons.titlePrevIcon,
             ),
           ),
         ));
@@ -199,7 +199,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5),
               color: widget.style.primaryBackgroundColor,
-              child: widget.style.icons.rightIcon,
+              child: widget.style.icons.titleNextIcon,
             ),
           ),
         ));
@@ -351,9 +351,9 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    widget.style.icons.upIcon,
+                    widget.style.icons.closeDropdownIcon,
                     Text(widget.text.clickClose),
-                    widget.style.icons.upIcon,
+                    widget.style.icons.closeDropdownIcon,
                   ],
                 ),
               ),
@@ -439,31 +439,35 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      left: false,
-      right: false,
-      bottom: false,
-      child: InheritedCalendarStyle<T>(
-        style: widget.style,
-        child: InheritedCalendarText(
-          text: widget.text,
-          child: InheritedCalendarEventModalOptions<T>(
-            options: widget.eventModalOptions,
-            child: ResponsiveLayout(
-              desktop: _buildLargeScreen(
-                  context, getView(widget.viewProvider.getType(context))),
-              laptop: _buildLargeScreen(
-                  context, getView(widget.viewProvider.getType(context))),
-              tablet: _buildSmallScreen(
-                  context, getView(widget.viewProvider.getType(context))),
-              mobile: _buildSmallScreen(
-                  context, getView(widget.viewProvider.getType(context))),
+    return FutureBuilder(
+        future: widget.eventProvider.init(context),
+        builder: (context, snapshot) {
+          return SafeArea(
+            top: true,
+            left: false,
+            right: false,
+            bottom: false,
+            child: InheritedCalendarStyle<T>(
+              style: widget.style,
+              child: InheritedCalendarText(
+                text: widget.text,
+                child: InheritedCalendarEventModalOptions<T>(
+                  options: widget.eventModalOptions,
+                  child: ResponsiveLayout(
+                    desktop: _buildLargeScreen(
+                        context, getView(widget.viewProvider.getType(context))),
+                    laptop: _buildLargeScreen(
+                        context, getView(widget.viewProvider.getType(context))),
+                    tablet: _buildSmallScreen(
+                        context, getView(widget.viewProvider.getType(context))),
+                    mobile: _buildSmallScreen(
+                        context, getView(widget.viewProvider.getType(context))),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ),
-      ),
-    );
+          );
+        });
   }
 }
 

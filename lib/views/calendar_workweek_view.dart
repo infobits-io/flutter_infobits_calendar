@@ -137,7 +137,7 @@ class _CalendarWorkweekViewState<T extends CalendarEvent>
                 height: height - 70,
                 child: FutureBuilder<List<CalendarEvent>>(
                     future: widget.eventProvider
-                        .fetchEvents(itemStartDate, itemEndDate),
+                        .fetchEvents(context, itemStartDate, itemEndDate),
                     initialData: const [],
                     builder: (context, snapshot) {
                       return NotificationListener<ScrollNotification>(
