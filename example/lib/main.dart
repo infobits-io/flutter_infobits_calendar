@@ -25,35 +25,6 @@ class TestEventProvider extends CalendarEventProvider<EventModel> {
 
   @override
   Future<List<EventModel>> fetchEvents(DateTime start, DateTime end) async {
-    // Map<int, int> lastDayHour = {};
-
-    // List<EventModel> events = [];
-    // //debugPrint("fetchEvents called $start");
-    // var rng = Random();
-    // for (var i = 0; i < 20; i++) {
-    //   var id = rng.nextInt(100).toString();
-
-    //   var day = start.day +
-    //       (rng.nextInt(4) % end.difference(start).inDays == 0
-    //           ? 1
-    //           : end.difference(start).inDays);
-
-    //   var startHour = (lastDayHour.containsKey(day) ? lastDayHour[day] : 8)! +
-    //       rng.nextInt(4);
-    //   if (startHour > 22) continue;
-    //   var endHour = min<int>(startHour + rng.nextInt(4), 23);
-    //   lastDayHour[day] = endHour;
-
-    //   events.add(
-    //     EventModel(
-    //       id: id,
-    //       title: "Test event",
-    //       subtitle: "Subtitle",
-    //       startDate: DateTime(start.year, start.month, day, startHour),
-    //       endDate: DateTime(start.year, start.month, day, endHour),
-    //     ),
-    //   );
-    // }
     return [
       EventModel(
         id: "123",

@@ -1,39 +1,102 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Infobits Calendar
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+A simple calendar to show your events
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
 ```dart
-const like = 'sample';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:infobits_calendar/infobits_calendar.dart';
+
+void main() {
+  runApp(const App());
+}
+
+class EventModel extends CalendarEvent {
+  final String id;
+
+  const EventModel({
+    required super.title,
+    required super.subtitle,
+    required super.startDate,
+    required super.endDate,
+    required this.id,
+  });
+}
+
+/// Fake event test provider
+class TestEventProvider extends CalendarEventProvider<EventModel> {
+  TestEventProvider() {}
+
+  @override
+  Future<List<EventModel>> fetchEvents(DateTime start, DateTime end) async {
+    return [
+      EventModel(
+        id: "123",
+        title: "Test event",
+        subtitle: "Subtitle",
+        startDate: DateTime(start.year, start.month, start.day, 10),
+        endDate: DateTime(start.year, start.month, start.day, 12),
+      ),
+      EventModel(
+        id: "123",
+        title: "Test event 2",
+        subtitle: "Subtitle 2",
+        startDate: DateTime(start.year, start.month, start.day, 13),
+        endDate: DateTime(start.year, start.month, start.day, 15),
+      ),
+    ];
+  }
+}
+
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Color(0xffffffff),
+        body: Calendar<EventModel>(
+          eventProvider: TestEventProvider(),
+          viewProvider: CalendarViewProvider(
+            mobileViewType: CalendarViewType.threeday,
+            desktopViewType: CalendarViewType.threeday,
+          ),
+          eventModalOptions: CalendarEventModalOptions(
+            infoEntryBuilders: [
+              (event) {
+                return CalendarModalInfoEntry(
+                  icon: Icon(Icons.calendar_month),
+                  child: Text(
+                      "Info widget for ${event.title} with id: ${event.id}"),
+                );
+              }
+            ],
+            bottomActions: [
+              ElevatedButton(
+                  onPressed: () => debugPrint("test"), child: Text("Button"))
+            ],
+            extraContent: Text("Test extra content"),
+          ),
+          style: CalendarStyle(primaryColor: Colors.red),
+          text: CalendarText(
+            createText: "Hmmm",
+          ),
+          extraContent: Text("Extra content"),
+          extraActions: [
+            CalendarQuickAction(
+              icon: Icon(Icons.settings),
+              title: "Settings",
+              onPressed: () => debugPrint("settings!"),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
