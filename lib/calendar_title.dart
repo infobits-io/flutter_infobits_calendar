@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../extensions/date_time.dart';
 
+import 'calendar_event.dart';
 import 'calendar_style.dart';
 import 'calendar_text.dart';
 import 'responsive_layout.dart';
 
-class CalendarTitle extends StatelessWidget {
+class CalendarTitle<T extends CalendarEvent> extends StatelessWidget {
   final void Function()? onPressed;
   final DateTime startShowingDate;
   final DateTime endShowingDate;
@@ -20,6 +21,7 @@ class CalendarTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var calendarText = CalendarText.of(context);
+    var calendarStyle = CalendarStyle.of<T>(context);
 
     return SizedBox(
       height: 50,
@@ -54,8 +56,7 @@ class CalendarTitle extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(vertical: 7, horizontal: 14),
                     decoration: BoxDecoration(
-                        color:
-                            CalendarStyle.of(context).secondaryBackgroundColor,
+                        color: calendarStyle.secondaryBackgroundColor,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(10))),
                     child: Text(

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'calendar_event.dart';
 import 'calendar_nav_day.dart';
 
-class CalendarNav extends StatelessWidget {
+class CalendarNav<T extends CalendarEvent> extends StatelessWidget {
   final bool offsetTimestamp;
   final DateTime startShowingDate;
   final DateTime endShowingDate;
 
-  final List<CalendarNavDay>? days;
+  final List<CalendarNavDay<T>>? days;
 
   const CalendarNav({
     super.key,
@@ -29,7 +30,7 @@ class CalendarNav extends StatelessWidget {
               children: days ??
                   [
                     for (var i = 1; i < 8; i++)
-                      CalendarNavDay(
+                      CalendarNavDay<T>(
                         date: startShowingDate.subtract(
                             Duration(days: startShowingDate.weekday - i)),
                         isSelectedDay: false,

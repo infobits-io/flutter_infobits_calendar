@@ -120,13 +120,13 @@ class _CalendarWorkweekViewState<T extends CalendarEvent>
 
           return Column(
             children: [
-              CalendarNav(
+              CalendarNav<T>(
                 offsetTimestamp: true,
                 startShowingDate: itemStartDate,
                 endShowingDate: itemEndDate,
                 days: [
                   for (var i = 1; i < 6; i++)
-                    CalendarNavDay(
+                    CalendarNavDay<T>(
                       date: itemStartDate
                           .subtract(Duration(days: itemStartDate.weekday - i)),
                       isSelectedDay: false,
@@ -152,7 +152,7 @@ class _CalendarWorkweekViewState<T extends CalendarEvent>
                             Column(
                               children: <Widget>[
                                 for (var i = 1; i < 25; i++)
-                                  CalendarTimestamp(
+                                  CalendarTimestamp<T>(
                                     hour: i,
                                   )
                               ],
@@ -166,7 +166,7 @@ class _CalendarWorkweekViewState<T extends CalendarEvent>
                                   decoration: BoxDecoration(
                                     border: Border(
                                       right: BorderSide(
-                                        color: CalendarStyle.of(context)
+                                        color: CalendarStyle.of<T>(context)
                                             .secondaryBackgroundColor,
                                       ),
                                     ),

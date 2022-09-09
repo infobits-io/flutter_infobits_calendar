@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../calendar_event.dart';
 import '../calendar_event_provider.dart';
+import '../calendar_style.dart';
 
 abstract class CalendarView<T extends CalendarEvent> extends StatefulWidget {
   final CalendarEventProvider<T> eventProvider;
@@ -55,7 +56,7 @@ abstract class CalendarViewState<T extends CalendarEvent,
   void selectShowingPeriod(int index);
 }
 
-class CalendarTimestamp extends StatelessWidget {
+class CalendarTimestamp<T extends CalendarEvent> extends StatelessWidget {
   final int hour;
   final int min;
   final bool showTime;
@@ -69,6 +70,8 @@ class CalendarTimestamp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var calendarStyle = CalendarStyle.of<T>(context);
+
     return SizedBox(
         height: 60,
         child: Row(
@@ -94,9 +97,11 @@ class CalendarTimestamp extends StatelessWidget {
             Expanded(
                 child: Container(
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 9),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 border: Border(
-                    bottom: BorderSide(color: Color(0xffeeeeee), width: 1)),
+                  bottom: BorderSide(
+                      color: calendarStyle.secondaryBackgroundColor, width: 1),
+                ),
               ),
             ))
           ],

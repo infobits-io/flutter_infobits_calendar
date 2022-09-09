@@ -120,7 +120,7 @@ class _Calendar3DayViewState<T extends CalendarEvent>
                 child: Column(
                   children: [
                     for (var i = 1; i < 25; i++)
-                      CalendarTimestamp(
+                      CalendarTimestamp<T>(
                         hour: i,
                       )
                   ],
@@ -163,12 +163,12 @@ class _Calendar3DayViewState<T extends CalendarEvent>
 
                   return Column(
                     children: [
-                      CalendarNav(
+                      CalendarNav<T>(
                         offsetTimestamp: false,
                         startShowingDate: startShowingDate,
                         endShowingDate: endShowingDate,
                         days: [
-                          CalendarNavDay(
+                          CalendarNavDay<T>(
                             date: itemStartDate,
                             isSelectedDay: false,
                           ),
@@ -210,14 +210,14 @@ class _Calendar3DayViewState<T extends CalendarEvent>
                                         decoration: BoxDecoration(
                                             border: Border(
                                                 left: BorderSide(
-                                          color: CalendarStyle.of(context)
+                                          color: CalendarStyle.of<T>(context)
                                               .secondaryBackgroundColor,
                                         ))),
                                         child: Stack(children: [
                                           Column(
                                             children: [
                                               for (var i = 1; i < 25; i++)
-                                                CalendarTimestamp(
+                                                CalendarTimestamp<T>(
                                                   hour: i,
                                                   showTime: false,
                                                 )

@@ -54,7 +54,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
                 fullPeriodString,
                 style: TextStyle(
                     fontSize: 15,
-                    color: CalendarStyle.of(context).secondaryTextColor),
+                    color: CalendarStyle.of<T>(context).secondaryTextColor),
               )
             ],
           )),
@@ -91,7 +91,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
       return Container(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           decoration: BoxDecoration(
-              color: CalendarStyle.of(context).primaryBackgroundColor,
+              color: CalendarStyle.of<T>(context).primaryBackgroundColor,
               borderRadius: BorderRadius.circular(20)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +101,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
 
     return Container(
         decoration: BoxDecoration(
-            color: CalendarStyle.of(context).primaryBackgroundColor,
+            color: CalendarStyle.of<T>(context).primaryBackgroundColor,
             borderRadius: BorderRadius.circular(20)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +109,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
             Center(
                 child: Container(
               decoration: BoxDecoration(
-                color: CalendarStyle.of(context).secondaryBackgroundColor,
+                color: CalendarStyle.of<T>(context).secondaryBackgroundColor,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
               ),
               margin: const EdgeInsets.fromLTRB(10, 15, 10, 20),

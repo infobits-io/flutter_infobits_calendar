@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'calendar_event.dart';
 import 'calendar_style.dart';
 
-class DefualtButton extends StatelessWidget {
-  final IconData? icon;
+class DefualtButton<T extends CalendarEvent> extends StatelessWidget {
+  final Widget? icon;
   final String text;
   final Function()? onPressed;
   final Color? backgroundColor;
@@ -22,8 +23,8 @@ class DefualtButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return _build(
       context,
-      color ?? CalendarStyle.of(context).primaryColorContrast,
-      backgroundColor ?? CalendarStyle.of(context).primaryColor,
+      color ?? CalendarStyle.of<T>(context).primaryColorContrast,
+      backgroundColor ?? CalendarStyle.of<T>(context).primaryColor,
     );
   }
 
@@ -47,7 +48,7 @@ class DefualtButton extends StatelessWidget {
                   if (icon != null)
                     Container(
                       padding: const EdgeInsets.fromLTRB(0, 0, 7, 0),
-                      child: icon != null ? Icon(icon) : Container(),
+                      child: icon ?? Container(),
                     ),
                   Text(
                     text,
@@ -66,7 +67,7 @@ class DefualtButton extends StatelessWidget {
   }
 }
 
-class PrimaryButton extends DefualtButton {
+class PrimaryButton<T extends CalendarEvent> extends DefualtButton<T> {
   const PrimaryButton({
     super.key,
     required super.text,
@@ -75,7 +76,7 @@ class PrimaryButton extends DefualtButton {
   });
 }
 
-class SecondaryButton extends DefualtButton {
+class SecondaryButton<T extends CalendarEvent> extends DefualtButton<T> {
   const SecondaryButton({
     super.key,
     required super.text,
@@ -85,7 +86,7 @@ class SecondaryButton extends DefualtButton {
 
   @override
   Widget build(BuildContext context) {
-    return _build(context, CalendarStyle.of(context).primaryTextColor,
-        CalendarStyle.of(context).secondaryBackgroundColor);
+    return _build(context, CalendarStyle.of<T>(context).primaryTextColor,
+        CalendarStyle.of<T>(context).secondaryBackgroundColor);
   }
 }

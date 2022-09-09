@@ -30,7 +30,7 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
     var timePeriodString =
         "${startHour.toString().padLeft(2, "0")}:${startMin.toString().padLeft(2, "0")}${event.endDate != null ? "- ${endHour.toString().padLeft(2, "0")}:${endMin.toString().padLeft(2, "0")}" : ""}";
 
-    var calendarStyle = CalendarStyle.of(context);
+    var calendarStyle = CalendarStyle.of<T>(context);
     var eventStyle = calendarStyle.getEventStyle(event);
 
     return Positioned(
@@ -151,7 +151,7 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
   }
 
   void openModal(BuildContext context) {
-    var calendarStyle = CalendarStyle.of(context);
+    var calendarStyle = CalendarStyle.of<T>(context);
     var eventStyle = calendarStyle.getEventStyle(event);
 
     var modalOptions = CalendarEventModalOptions.of<T>(context);

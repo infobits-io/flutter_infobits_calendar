@@ -91,13 +91,13 @@ class _CalendarDayViewState<T extends CalendarEvent>
 
       return Column(
         children: [
-          CalendarNav(
+          CalendarNav<T>(
             offsetTimestamp: true,
             startShowingDate: startShowingDate,
             endShowingDate: endShowingDate,
             days: [
               for (var i = 1; i < 8; i++)
-                CalendarNavDay(
+                CalendarNavDay<T>(
                   date: startShowingDate
                       .subtract(Duration(days: startShowingDate.weekday - i)),
                   isSelectedDay: startShowingDate
@@ -153,7 +153,7 @@ class _CalendarDayViewState<T extends CalendarEvent>
                               Column(
                                 children: [
                                   for (var i = 1; i < 25; i++)
-                                    CalendarTimestamp(
+                                    CalendarTimestamp<T>(
                                       hour: i,
                                     )
                                 ],

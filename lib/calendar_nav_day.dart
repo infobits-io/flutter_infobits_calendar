@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../extensions/date_time.dart';
+import 'calendar_event.dart';
 import 'calendar_style.dart';
 import 'calendar_text.dart';
 
-class CalendarNavDay extends StatelessWidget {
+class CalendarNavDay<T extends CalendarEvent> extends StatelessWidget {
   final bool isSelectedDay;
   final DateTime date;
 
@@ -15,6 +16,8 @@ class CalendarNavDay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var calendarStyle = CalendarStyle.of<T>(context);
+
     return Expanded(
         child: GestureDetector(
       onTap: () => debugPrint("nav day clicked"),
@@ -29,7 +32,7 @@ class CalendarNavDay extends StatelessWidget {
                 Text(
                   CalendarText.of(context).weekdays.weekdayShort(date),
                   style: date.isSameDate(DateTime.now())
-                      ? TextStyle(color: CalendarStyle.of(context).primaryColor)
+                      ? TextStyle(color: calendarStyle.primaryColor)
                       : null,
                 ),
                 SizedBox(
@@ -40,18 +43,16 @@ class CalendarNavDay extends StatelessWidget {
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: date.isSameDate(DateTime.now())
-                                ? CalendarStyle.of(context).primaryColor
+                                ? calendarStyle.primaryColor
                                 : (isSelectedDay
-                                    ? CalendarStyle.of(context)
-                                        .secondaryBackgroundColor
+                                    ? calendarStyle.secondaryBackgroundColor
                                     : null)),
                         child: Center(
                           child: Text(
                             date.day.toString(),
                             style: date.isSameDate(DateTime.now())
                                 ? TextStyle(
-                                    color: CalendarStyle.of(context)
-                                        .primaryBackgroundColor)
+                                    color: calendarStyle.primaryBackgroundColor)
                                 : null,
                           ),
                         ),

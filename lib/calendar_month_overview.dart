@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import '../extensions/date_time.dart';
+import 'calendar_event.dart';
 import 'calendar_style.dart';
 import 'calendar_text.dart';
 import 'on_hover.dart';
 
 enum CalendarMonthOverviewDaySelect { middle, left, right, only, not }
 
-class CalendarMonthOverview extends StatefulWidget {
+class CalendarMonthOverview<T extends CalendarEvent> extends StatefulWidget {
   final DateTime startShowingDate;
   final DateTime endShowingDate;
   final void Function(DateTime dayDate) onDayPressed;
@@ -19,10 +20,12 @@ class CalendarMonthOverview extends StatefulWidget {
   });
 
   @override
-  State<CalendarMonthOverview> createState() => CalendarMonthOverviewState();
+  State<CalendarMonthOverview<T>> createState() =>
+      CalendarMonthOverviewState<T>();
 }
 
-class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
+class CalendarMonthOverviewState<T extends CalendarEvent>
+    extends State<CalendarMonthOverview<T>> {
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
   DateTime? lastCurrentDate;
@@ -113,6 +116,7 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
   @override
   Widget build(BuildContext context) {
     var calendarText = CalendarText.of(context);
+    var calendarStyle = CalendarStyle.of<T>(context);
 
     return Container(
       padding: const EdgeInsets.all(10),
@@ -133,10 +137,10 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: Container(
-                        color: CalendarStyle.of(context).primaryBackgroundColor,
+                        color: calendarStyle.primaryBackgroundColor,
                         padding: const EdgeInsets.symmetric(
                             vertical: 2, horizontal: 10),
-                        child: CalendarStyle.of(context).icons.leftIcon),
+                        child: calendarStyle.icons.leftIcon),
                   ),
                 ),
                 GestureDetector(
@@ -144,10 +148,10 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
                   child: MouseRegion(
                     cursor: SystemMouseCursors.click,
                     child: Container(
-                        color: CalendarStyle.of(context).primaryBackgroundColor,
+                        color: calendarStyle.primaryBackgroundColor,
                         padding: const EdgeInsets.symmetric(
                             vertical: 2, horizontal: 10),
-                        child: CalendarStyle.of(context).icons.rightIcon),
+                        child: calendarStyle.icons.rightIcon),
                   ),
                 )
               ],
@@ -180,8 +184,8 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
                           child: weekdayNum == 0
                               ? Container(
                                   decoration: BoxDecoration(
-                                    color: CalendarStyle.of(context)
-                                        .secondaryBackgroundColor,
+                                    color:
+                                        calendarStyle.secondaryBackgroundColor,
                                     borderRadius: weekNum == 0
                                         ? const BorderRadius.only(
                                             topRight: Radius.circular(10),
@@ -205,8 +209,7 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
                                     borderRadius: getDayBorderRadius(dayDate),
                                     color: isDaySelected(dayDate) !=
                                             CalendarMonthOverviewDaySelect.not
-                                        ? CalendarStyle.of(context)
-                                            .secondaryBackgroundColor
+                                        ? calendarStyle.secondaryBackgroundColor
                                         : null,
                                   ),
                                   child: GestureDetector(
@@ -220,10 +223,9 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
                                             shape: BoxShape.circle,
                                             color: DateTime.now()
                                                     .isSameDate(dayDate)
-                                                ? CalendarStyle.of(context)
-                                                    .primaryColor
+                                                ? calendarStyle.primaryColor
                                                 : (hover
-                                                    ? CalendarStyle.of(context)
+                                                    ? calendarStyle
                                                         .secondaryBackgroundColor
                                                     : null)),
                                         child: Column(
@@ -242,16 +244,14 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
                                               style: TextStyle(
                                                   color: DateTime.now()
                                                           .isSameDate(dayDate)
-                                                      ? CalendarStyle.of(
-                                                              context)
+                                                      ? calendarStyle
                                                           .primaryColorContrast
                                                       : (dayDate.isSameMonth(
                                                               DateTime(
                                                                   currentYear,
                                                                   currentMonth))
                                                           ? null
-                                                          : CalendarStyle.of(
-                                                                  context)
+                                                          : calendarStyle
                                                               .secondaryTextColor)),
                                             ),
                                             Container(
@@ -262,18 +262,15 @@ class CalendarMonthOverviewState extends State<CalendarMonthOverview> {
                                                 color: dateHasEvent(dayDate)
                                                     ? (DateTime.now()
                                                             .isSameDate(dayDate)
-                                                        ? CalendarStyle
-                                                                .of(context)
+                                                        ? calendarStyle
                                                             .primaryColorContrast
                                                         : (dayDate.isSameMonth(
                                                                 DateTime(
                                                                     currentYear,
                                                                     currentMonth))
-                                                            ? CalendarStyle.of(
-                                                                    context)
+                                                            ? calendarStyle
                                                                 .primaryTextColor
-                                                            : CalendarStyle.of(
-                                                                    context)
+                                                            : calendarStyle
                                                                 .secondaryTextColor))
                                                     : const Color(0x00ffffff),
                                               ),

@@ -29,7 +29,7 @@ class Calendar<T extends CalendarEvent> extends StatefulWidget {
   final CalendarEventProvider<T> eventProvider;
   final CalendarEventModalOptions<T> eventModalOptions;
   final CalendarViewProvider viewProvider;
-  final List<CalendarQuickAction> extraActions;
+  final List<CalendarQuickAction<T>> extraActions;
   final Widget? extraContent;
   final CalendarStyle<T> style;
   final CalendarText text;
@@ -198,7 +198,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
             cursor: SystemMouseCursors.click,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              color: CalendarStyle.of(context).primaryBackgroundColor,
+              color: widget.style.primaryBackgroundColor,
               child: widget.style.icons.rightIcon,
             ),
           ),
@@ -343,7 +343,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                 ),
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
-                  color: CalendarStyle.of(context).secondaryBackgroundColor,
+                  color: widget.style.secondaryBackgroundColor,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(999),
                   ),
@@ -389,7 +389,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         PrimaryButton(
-                          icon: Icons.add,
+                          icon: widget.style.icons.createIcon,
                           text: widget.text.createText,
                           onPressed: createEvent,
                         ),
@@ -467,7 +467,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
   }
 }
 
-class CalendarQuickAction extends StatelessWidget {
+class CalendarQuickAction<T extends CalendarEvent> extends StatelessWidget {
   final Widget icon;
   final String title;
   final void Function() onPressed;
@@ -486,7 +486,7 @@ class CalendarQuickAction extends StatelessWidget {
         padding: EdgeInsets.symmetric(
             vertical: 7, horizontal: ScreenSizes.isMobile(context) ? 14 : 7),
         decoration: BoxDecoration(
-          color: CalendarStyle.of(context).secondaryBackgroundColor,
+          color: CalendarStyle.of<T>(context).secondaryBackgroundColor,
           borderRadius: const BorderRadius.all(
             Radius.circular(999),
           ),
