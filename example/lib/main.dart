@@ -24,7 +24,8 @@ class TestEventProvider extends CalendarEventProvider<EventModel> {
   TestEventProvider() {}
 
   @override
-  Future<List<EventModel>> fetchEvents(DateTime start, DateTime end) async {
+  Future<List<EventModel>> fetchEvents(
+      BuildContext context, DateTime start, DateTime end) async {
     return [
       EventModel(
         id: "123",
