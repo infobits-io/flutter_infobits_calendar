@@ -2,6 +2,14 @@
 
 A simple calendar to show your events
 
+## Getting Started
+
+Start by adding it to your dependencies by running the following command
+
+```
+flutter pub add infobits_calendar
+```
+
 ## Usage
 
 ```dart
