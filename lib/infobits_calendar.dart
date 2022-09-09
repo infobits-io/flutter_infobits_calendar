@@ -55,8 +55,8 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
   bool monthDropdownOpen = false;
   bool dropdownShowingOverview = true;
   ScrollController dropdownScrollController = ScrollController();
-  late GlobalKey<CalendarViewState> viewKey;
-  late GlobalKey<CalendarMonthOverviewState> overviewKey;
+  late GlobalKey<CalendarViewState<T, CalendarView<T>>> viewKey;
+  late GlobalKey<CalendarMonthOverviewState<T>> overviewKey;
 
   late DateTime startShowingDate;
   late DateTime endShowingDate;
@@ -283,7 +283,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                         children: [
                           SizedBox(
                             width: constraints.maxWidth,
-                            child: CalendarMonthOverview(
+                            child: CalendarMonthOverview<T>(
                               key: overviewKey,
                               onDayPressed: onOverviewDayPressed,
                               startShowingDate: startShowingDate,
@@ -324,7 +324,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
               children: [
                 _leftButton(context),
                 Expanded(
-                  child: CalendarTitle(
+                  child: CalendarTitle<T>(
                     onPressed: () => toggleMonthOverview(),
                     startShowingDate: startShowingDate,
                     endShowingDate: endShowingDate,
@@ -388,7 +388,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        PrimaryButton(
+                        PrimaryButton<T>(
                           icon: widget.style.icons.createIcon,
                           text: widget.text.createText,
                           onPressed: createEvent,
@@ -400,7 +400,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                 ],
               ),
             ),
-            CalendarMonthOverview(
+            CalendarMonthOverview<T>(
               key: overviewKey,
               onDayPressed: onOverviewDayPressed,
               startShowingDate: startShowingDate,
@@ -423,7 +423,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                 _leftButton(context),
                 _rightButton(context),
                 Expanded(
-                  child: CalendarTitle(
+                  child: CalendarTitle<T>(
                     startShowingDate: startShowingDate,
                     endShowingDate: endShowingDate,
                   ),
