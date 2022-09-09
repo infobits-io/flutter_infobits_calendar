@@ -177,8 +177,8 @@ class _Calendar3DayViewState<T extends CalendarEvent>
                       SizedBox(
                         height: height - 70,
                         child: FutureBuilder<List<CalendarEvent>>(
-                            future: widget.eventProvider
-                                .fetchEvents(itemStartDate, itemEndDate),
+                            future: widget.eventProvider.fetchEvents(
+                                context, itemStartDate, itemEndDate),
                             initialData: const [],
                             builder: (context, snapshot) {
                               return NotificationListener<ScrollNotification>(
