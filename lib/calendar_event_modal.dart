@@ -8,7 +8,8 @@ import 'calendar_text.dart';
 
 class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
   final T event;
-  final CalendarEventStyle style;
+  final CalendarStyle style;
+  final CalendarEventStyle eventStyle;
   final CalendarEventModalOptions<T> options;
   final bool dialog;
 
@@ -17,6 +18,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     required this.event,
     this.dialog = false,
     required this.style,
+    required this.eventStyle,
     required this.options,
   });
 
@@ -31,33 +33,31 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
 
     List<Widget> modalChildren = [
       _buildModalRow(
-          icon: Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                color: style.backgroundColor,
-                shape: BoxShape.circle,
-              )),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SelectableText(
-                event.title,
-                style:
-                    const TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-              ),
-              SelectableText(
-                event.subtitle ?? "",
-                style: const TextStyle(fontSize: 20),
-              ),
-              SelectableText(
-                fullPeriodString,
-                style: TextStyle(
-                    fontSize: 15,
-                    color: CalendarStyle.of<T>(context).secondaryTextColor),
-              )
-            ],
-          )),
+        icon: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              color: eventStyle.backgroundColor,
+              shape: BoxShape.circle,
+            )),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SelectableText(
+              event.title,
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+            ),
+            SelectableText(
+              event.subtitle ?? "",
+              style: const TextStyle(fontSize: 20),
+            ),
+            SelectableText(
+              fullPeriodString,
+              style: TextStyle(fontSize: 15, color: style.secondaryTextColor),
+            )
+          ],
+        ),
+      ),
     ];
 
     if (options.infoEntryBuilders.isNotEmpty) {
@@ -73,7 +73,8 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     }
 
     if (options.bottomActions.isNotEmpty) {
-      modalChildren.add(_buildModalRow(
+      modalChildren.add(
+        _buildModalRow(
           icon: Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
             child: Icon(options.bottomActionsIcon),
@@ -84,24 +85,27 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
             spacing: 5,
             runSpacing: 5,
             children: options.bottomActions,
-          )));
+          ),
+        ),
+      );
     }
 
     if (dialog) {
       return Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          decoration: BoxDecoration(
-              color: CalendarStyle.of<T>(context).primaryBackgroundColor,
-              borderRadius: BorderRadius.circular(20)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: modalChildren,
-          ));
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        decoration: BoxDecoration(
+            color: style.primaryBackgroundColor,
+            borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: modalChildren,
+        ),
+      );
     }
 
     return Container(
         decoration: BoxDecoration(
-            color: CalendarStyle.of<T>(context).primaryBackgroundColor,
+            color: style.primaryBackgroundColor,
             borderRadius: BorderRadius.circular(20)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +113,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
             Center(
                 child: Container(
               decoration: BoxDecoration(
-                color: CalendarStyle.of<T>(context).secondaryBackgroundColor,
+                color: style.secondaryBackgroundColor,
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
               ),
               margin: const EdgeInsets.fromLTRB(10, 15, 10, 20),
@@ -137,9 +141,11 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
           child: Center(child: icon),
         ),
         Expanded(
-            child: Container(
-                padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
-                child: child))
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(0, 10, 20, 10),
+            child: child,
+          ),
+        )
       ],
     );
   }

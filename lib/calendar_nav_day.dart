@@ -52,7 +52,7 @@ class CalendarNavDay<T extends CalendarEvent> extends StatelessWidget {
                             date.day.toString(),
                             style: date.isSameDate(DateTime.now())
                                 ? TextStyle(
-                                    color: calendarStyle.primaryBackgroundColor)
+                                    color: calendarStyle.primaryColorContrast)
                                 : null,
                           ),
                         ),

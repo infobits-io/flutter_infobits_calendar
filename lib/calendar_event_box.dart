@@ -176,7 +176,8 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
           builder: (BuildContext context) {
             return CalendarEventModal<T>(
               event: event,
-              style: eventStyle,
+              style: calendarStyle,
+              eventStyle: eventStyle,
               options: modalOptions,
             );
           });
@@ -195,7 +196,8 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
             children: [
               CalendarEventModal<T>(
                 event: event,
-                style: eventStyle,
+                style: calendarStyle,
+                eventStyle: eventStyle,
                 options: modalOptions,
                 dialog: true,
               )
