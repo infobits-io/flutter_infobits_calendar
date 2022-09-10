@@ -9,6 +9,46 @@ import '../calendar_nav_day.dart';
 import '../calendar_style.dart';
 import 'calendar_view.dart';
 
+class SyncScrollController {
+  List<ScrollController> registeredScrollControllers = [];
+
+  ScrollController? _scrollingController;
+  bool _scrollingActive = false;
+
+  SyncScrollController({this.registeredScrollControllers = const []});
+
+  void registerScrollController(ScrollController controller) {
+    registeredScrollControllers.add(controller);
+  }
+
+  void processNotification(
+      ScrollNotification notification, ScrollController sender) {
+    if (notification is ScrollStartNotification && !_scrollingActive) {
+      _scrollingController = sender;
+      _scrollingActive = true;
+      return;
+    }
+
+    if (identical(sender, _scrollingController) && _scrollingActive) {
+      if (notification is ScrollEndNotification) {
+        _scrollingController = null;
+        _scrollingActive = false;
+        return;
+      }
+
+      if (notification is ScrollUpdateNotification &&
+          _scrollingController != null) {
+        registeredScrollControllers.forEach((controller) => {
+              if (!identical(_scrollingController, controller) &&
+                  controller.hasClients)
+                controller..jumpTo(_scrollingController!.offset)
+            });
+        return;
+      }
+    }
+  }
+}
+
 class Calendar3DayView<T extends CalendarEvent> extends CalendarView<T> {
   const Calendar3DayView({
     super.key,
@@ -30,11 +70,9 @@ class _Calendar3DayViewState<T extends CalendarEvent>
     extends CalendarViewState<T, Calendar3DayView<T>> {
   int lastIndex = 10000;
   double scrollOffset = (8 * 60) - 20;
-  List<ScrollController> controllers = [];
-  ScrollController timestampController = ScrollController(
-    initialScrollOffset: (8 * 60) - 20,
-  );
+  late ScrollController timestampController;
   CarouselController carouselController = CarouselController();
+  late SyncScrollController syncController;
 
   _Calendar3DayViewState(
       {required super.startShowingDate, required super.endShowingDate});
@@ -100,7 +138,21 @@ class _Calendar3DayViewState<T extends CalendarEvent>
       widget.onDateIntervalChange(startShowingDate, endShowingDate,
           updateView: false);
     });
+    timestampController = ScrollController(
+      initialScrollOffset: scrollOffset,
+      debugLabel: "scroll-controller-timestamp",
+    );
+    syncController = SyncScrollController(
+        registeredScrollControllers: [timestampController]);
     super.initState();
+  }
+
+  // TODO: When jumpTo is triggered it triggers the ScrollNotification. This creates infinite loop...
+  bool onScroll(ScrollNotification scrollNotification,
+      ScrollController currentController) {
+    scrollOffset = scrollNotification.metrics.pixels;
+    syncController.processNotification(scrollNotification, currentController);
+    return false;
   }
 
   @override
@@ -112,18 +164,22 @@ class _Calendar3DayViewState<T extends CalendarEvent>
 
         return Row(
           children: [
-            Container(
-              padding: const EdgeInsets.only(top: 70),
-              width: 45,
-              child: SingleChildScrollView(
-                controller: timestampController,
-                child: Column(
-                  children: [
-                    for (var i = 1; i < 25; i++)
-                      CalendarTimestamp<T>(
-                        hour: i,
-                      )
-                  ],
+            NotificationListener<ScrollNotification>(
+              onNotification: (scrollNotification) =>
+                  onScroll(scrollNotification, timestampController),
+              child: Container(
+                padding: const EdgeInsets.only(top: 70),
+                width: 45,
+                child: SingleChildScrollView(
+                  controller: timestampController,
+                  child: Column(
+                    children: [
+                      for (var i = 1; i < 25; i++)
+                        CalendarTimestamp<T>(
+                          hour: i,
+                        )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -158,8 +214,9 @@ class _Calendar3DayViewState<T extends CalendarEvent>
 
                   var controller = ScrollController(
                     initialScrollOffset: scrollOffset,
+                    debugLabel: "scroll-controller-$index",
                   );
-                  controllers.add(controller);
+                  syncController.registerScrollController(controller);
 
                   return Column(
                     children: [
@@ -182,55 +239,37 @@ class _Calendar3DayViewState<T extends CalendarEvent>
                             initialData: const [],
                             builder: (context, snapshot) {
                               return NotificationListener<ScrollNotification>(
-                                  onNotification: (scrollNotification) {
-                                    // calendarState
-                                    //     .setScrollOffset(scrollNotification.metrics.pixels);
-                                    scrollOffset =
-                                        scrollNotification.metrics.pixels;
-                                    timestampController.jumpTo(scrollOffset);
-                                    List<ScrollController> controllersToRemove =
-                                        [];
-                                    for (var _controller in controllers) {
-                                      if (_controller != controller &&
-                                          _controller.hasClients) {
-                                        _controller.jumpTo(scrollOffset);
-                                      } else if (!_controller.hasClients) {
-                                        controllersToRemove.add(_controller);
-                                      }
-                                    }
-                                    for (var _controller
-                                        in controllersToRemove) {
-                                      controllers.remove(_controller);
-                                    }
-                                    return false;
-                                  },
-                                  child: SingleChildScrollView(
-                                      controller: controller,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                left: BorderSide(
-                                          color: CalendarStyle.of<T>(context)
-                                              .secondaryBackgroundColor,
-                                        ))),
-                                        child: Stack(children: [
-                                          Column(
-                                            children: [
-                                              for (var i = 1; i < 25; i++)
-                                                CalendarTimestamp<T>(
-                                                  hour: i,
-                                                  showTime: false,
-                                                )
-                                            ],
-                                          ),
-                                          for (var event in snapshot.data ?? [])
-                                            CalendarEventBox<T>(
-                                              event: event,
-                                              left: -44,
-                                              right: -4,
+                                onNotification: (scrollNotification) =>
+                                    onScroll(scrollNotification, controller),
+                                child: SingleChildScrollView(
+                                  controller: controller,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            left: BorderSide(
+                                      color: CalendarStyle.of<T>(context)
+                                          .secondaryBackgroundColor,
+                                    ))),
+                                    child: Stack(children: [
+                                      Column(
+                                        children: [
+                                          for (var i = 1; i < 25; i++)
+                                            CalendarTimestamp<T>(
+                                              hour: i,
+                                              showTime: false,
                                             )
-                                        ]),
-                                      )));
+                                        ],
+                                      ),
+                                      for (var event in snapshot.data ?? [])
+                                        CalendarEventBox<T>(
+                                          event: event,
+                                          left: -44,
+                                          right: -4,
+                                        )
+                                    ]),
+                                  ),
+                                ),
+                              );
                             }),
                       ),
                     ],

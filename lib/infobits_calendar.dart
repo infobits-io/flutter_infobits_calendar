@@ -206,16 +206,16 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
   }
 
   Widget _buildSmallScreen(BuildContext context, CalendarView view) {
-    return GestureDetector(
-      onPanUpdate: (details) {
-        if (details.delta.dy < -10) {
-          closeMonthOverview();
-        }
-      },
-      child: Column(
-        children: [
-          LayoutBuilder(builder: (context, constraints) {
-            return AnimatedCrossFade(
+    return Column(
+      children: [
+        LayoutBuilder(builder: (context, constraints) {
+          return GestureDetector(
+            onPanUpdate: (details) {
+              if (details.delta.dy < -10) {
+                closeMonthOverview();
+              }
+            },
+            child: AnimatedCrossFade(
               duration: const Duration(milliseconds: 300),
               sizeCurve: Curves.ease,
               firstCurve: Curves.ease,
@@ -223,7 +223,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
               firstChild: Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.all(2),
+                    margin: const EdgeInsets.fromLTRB(2, 10, 2, 2),
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     decoration: BoxDecoration(
@@ -313,63 +313,63 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
               crossFadeState: monthDropdownOpen
                   ? CrossFadeState.showFirst
                   : CrossFadeState.showSecond,
-            );
-          }),
-          AnimatedCrossFade(
-            duration: const Duration(milliseconds: 300),
-            sizeCurve: Curves.ease,
-            firstCurve: Curves.ease,
-            secondCurve: Curves.ease,
-            firstChild: Row(
-              children: [
-                _leftButton(context),
-                Expanded(
-                  child: CalendarTitle<T>(
-                    onPressed: () => toggleMonthOverview(),
-                    startShowingDate: startShowingDate,
-                    endShowingDate: endShowingDate,
-                  ),
-                ),
-                _rightButton(context),
-              ],
             ),
-            secondChild: GestureDetector(
-              onTap: closeMonthOverview,
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(
-                  vertical: 7,
-                  horizontal: 14,
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                  color: widget.style.secondaryBackgroundColor,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(999),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    widget.style.icons.closeDropdownIcon,
-                    Text(widget.text.clickClose),
-                    widget.style.icons.closeDropdownIcon,
-                  ],
+          );
+        }),
+        AnimatedCrossFade(
+          duration: const Duration(milliseconds: 300),
+          sizeCurve: Curves.ease,
+          firstCurve: Curves.ease,
+          secondCurve: Curves.ease,
+          firstChild: Row(
+            children: [
+              _leftButton(context),
+              Expanded(
+                child: CalendarTitle<T>(
+                  onPressed: () => toggleMonthOverview(),
+                  startShowingDate: startShowingDate,
+                  endShowingDate: endShowingDate,
                 ),
               ),
-            ),
-            crossFadeState: monthDropdownOpen
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
+              _rightButton(context),
+            ],
           ),
-          Expanded(
-            child: GestureDetector(
-              onTap: closeMonthOverview,
-              child: view,
+          secondChild: GestureDetector(
+            onTap: closeMonthOverview,
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(
+                vertical: 7,
+                horizontal: 14,
+              ),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: widget.style.secondaryBackgroundColor,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(999),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  widget.style.icons.closeDropdownIcon,
+                  Text(widget.text.clickClose),
+                  widget.style.icons.closeDropdownIcon,
+                ],
+              ),
             ),
           ),
-        ],
-      ),
+          crossFadeState: monthDropdownOpen
+              ? CrossFadeState.showSecond
+              : CrossFadeState.showFirst,
+        ),
+        Expanded(
+          child: GestureDetector(
+            onTap: closeMonthOverview,
+            child: view,
+          ),
+        ),
+      ],
     );
   }
 
