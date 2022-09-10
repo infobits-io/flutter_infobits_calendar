@@ -68,8 +68,8 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
       }
     }
 
-    if (options.extraContent != null) {
-      modalChildren.add(options.extraContent!);
+    if (options.extraContentBuilder != null) {
+      modalChildren.add(options.extraContentBuilder!(event));
     }
 
     if (options.bottomActionBuilders.isNotEmpty) {

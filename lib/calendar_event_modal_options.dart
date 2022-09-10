@@ -6,13 +6,13 @@ class CalendarEventModalOptions<T extends CalendarEvent> {
   final IconData bottomActionsIcon;
   final List<CalendarModalInfoEntry Function(T event)> infoEntryBuilders;
   final List<Widget Function(T event)> bottomActionBuilders;
-  final Widget? extraContent;
+  final Widget Function(T event)? extraContentBuilder;
 
   const CalendarEventModalOptions({
     this.bottomActionsIcon = Icons.link,
     this.infoEntryBuilders = const [],
     this.bottomActionBuilders = const [],
-    this.extraContent,
+    this.extraContentBuilder,
   });
 
   static CalendarEventModalOptions<T> of<T extends CalendarEvent>(

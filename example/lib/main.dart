@@ -78,7 +78,7 @@ class App extends StatelessWidget {
                 );
               }
             ],
-            extraContent: Text("Test extra content"),
+            extraContentBuilder: (event) => Text("Test extra content"),
           ),
           style: CalendarStyle(primaryColor: Colors.red),
           text: CalendarText(
