@@ -72,7 +72,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
       modalChildren.add(options.extraContent!);
     }
 
-    if (options.bottomActions.isNotEmpty) {
+    if (options.bottomActionBuilders.isNotEmpty) {
       modalChildren.add(
         _buildModalRow(
           icon: Padding(
@@ -84,7 +84,10 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.start,
             spacing: 5,
             runSpacing: 5,
-            children: options.bottomActions,
+            children: [
+              for (var actionBuilder in options.bottomActionBuilders)
+                actionBuilder(event)
+            ],
           ),
         ),
       );

@@ -5,13 +5,13 @@ import 'calendar_event.dart';
 class CalendarEventModalOptions<T extends CalendarEvent> {
   final IconData bottomActionsIcon;
   final List<CalendarModalInfoEntry Function(T event)> infoEntryBuilders;
-  final List<Widget> bottomActions;
+  final List<Widget Function(T event)> bottomActionBuilders;
   final Widget? extraContent;
 
   const CalendarEventModalOptions({
     this.bottomActionsIcon = Icons.link,
     this.infoEntryBuilders = const [],
-    this.bottomActions = const [],
+    this.bottomActionBuilders = const [],
     this.extraContent,
   });
 

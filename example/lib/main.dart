@@ -70,9 +70,13 @@ class App extends StatelessWidget {
                 );
               }
             ],
-            bottomActions: [
-              ElevatedButton(
-                  onPressed: () => debugPrint("test"), child: Text("Button"))
+            bottomActionBuilders: [
+              (event) {
+                return ElevatedButton(
+                  onPressed: () => debugPrint("test"),
+                  child: Text("Button"),
+                );
+              }
             ],
             extraContent: Text("Test extra content"),
           ),
