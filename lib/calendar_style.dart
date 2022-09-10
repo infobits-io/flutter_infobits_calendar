@@ -66,6 +66,7 @@ class CalendarIconsStyle {
   final Widget overviewNextIcon;
   final Widget overviewPrevIcon;
   final Widget closeDropdownIcon;
+  final Widget modalBottomActionsIcon;
 
   const CalendarIconsStyle({
     this.createIcon = const Icon(Icons.add),
@@ -74,6 +75,7 @@ class CalendarIconsStyle {
     this.overviewPrevIcon = const Icon(Icons.chevron_left),
     this.overviewNextIcon = const Icon(Icons.chevron_right),
     this.closeDropdownIcon = const Icon(Icons.arrow_drop_up_rounded),
+    this.modalBottomActionsIcon = const Icon(Icons.link),
   });
 }
 

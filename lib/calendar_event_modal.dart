@@ -88,7 +88,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
         _buildModalRow(
           icon: Padding(
             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Icon(options.bottomActionsIcon),
+            child: style.icons.modalBottomActionsIcon,
           ),
           child: Wrap(
             direction: Axis.horizontal,

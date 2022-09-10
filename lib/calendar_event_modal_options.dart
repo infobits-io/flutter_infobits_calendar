@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'calendar_event.dart';
 
 class CalendarEventModalOptions<T extends CalendarEvent> {
-  final IconData bottomActionsIcon;
   final List<CalendarModalInfoEntry? Function(T event, bool dialog)>
       infoEntryBuilders;
   final List<Widget? Function(T event, bool dialog)> bottomActionBuilders;
   final Widget? Function(T event, bool dialog)? extraContentBuilder;
 
   const CalendarEventModalOptions({
-    this.bottomActionsIcon = Icons.link,
     this.infoEntryBuilders = const [],
     this.bottomActionBuilders = const [],
     this.extraContentBuilder,
