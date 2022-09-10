@@ -63,16 +63,27 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     if (options.infoEntryBuilders.isNotEmpty) {
       for (var infoEntryBuilder in options.infoEntryBuilders) {
         var infoEntry = infoEntryBuilder(event);
+        if (infoEntry == null) continue;
         modalChildren
             .add(_buildModalRow(icon: infoEntry.icon, child: infoEntry.child));
       }
     }
 
     if (options.extraContentBuilder != null) {
-      modalChildren.add(options.extraContentBuilder!(event));
+      var extraContent = options.extraContentBuilder!(event);
+      if (extraContent != null) {
+        modalChildren.add(extraContent);
+      }
     }
 
     if (options.bottomActionBuilders.isNotEmpty) {
+      List<Widget> actions = [];
+      for (var actionBuilder in options.bottomActionBuilders) {
+        var action = actionBuilder(event);
+        if (action == null) continue;
+        actions.add(action);
+      }
+
       modalChildren.add(
         _buildModalRow(
           icon: Padding(
@@ -84,10 +95,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.start,
             spacing: 5,
             runSpacing: 5,
-            children: [
-              for (var actionBuilder in options.bottomActionBuilders)
-                actionBuilder(event)
-            ],
+            children: actions,
           ),
         ),
       );
