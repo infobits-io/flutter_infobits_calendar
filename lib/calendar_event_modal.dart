@@ -62,7 +62,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
 
     if (options.infoEntryBuilders.isNotEmpty) {
       for (var infoEntryBuilder in options.infoEntryBuilders) {
-        var infoEntry = infoEntryBuilder(event);
+        var infoEntry = infoEntryBuilder(event, dialog);
         if (infoEntry == null) continue;
         modalChildren
             .add(_buildModalRow(icon: infoEntry.icon, child: infoEntry.child));
@@ -70,7 +70,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     }
 
     if (options.extraContentBuilder != null) {
-      var extraContent = options.extraContentBuilder!(event);
+      var extraContent = options.extraContentBuilder!(event, dialog);
       if (extraContent != null) {
         modalChildren.add(extraContent);
       }
@@ -79,7 +79,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     if (options.bottomActionBuilders.isNotEmpty) {
       List<Widget> actions = [];
       for (var actionBuilder in options.bottomActionBuilders) {
-        var action = actionBuilder(event);
+        var action = actionBuilder(event, dialog);
         if (action == null) continue;
         actions.add(action);
       }

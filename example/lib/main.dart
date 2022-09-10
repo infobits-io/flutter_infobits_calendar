@@ -62,7 +62,7 @@ class App extends StatelessWidget {
           ),
           eventModalOptions: CalendarEventModalOptions(
             infoEntryBuilders: [
-              (event) {
+              (event, dialog) {
                 return CalendarModalInfoEntry(
                   icon: Icon(Icons.calendar_month),
                   child: Text(
@@ -71,14 +71,14 @@ class App extends StatelessWidget {
               }
             ],
             bottomActionBuilders: [
-              (event) {
+              (event, dialog) {
                 return ElevatedButton(
                   onPressed: () => debugPrint("test"),
                   child: Text("Button"),
                 );
               }
             ],
-            extraContentBuilder: (event) => Text("Test extra content"),
+            extraContentBuilder: (event, dialog) => Text("Test extra content"),
           ),
           style: CalendarStyle(primaryColor: Colors.red),
           text: CalendarText(
