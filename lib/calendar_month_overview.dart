@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../extensions/date_time.dart';
 import 'calendar_event.dart';
+import 'calendar_event_provider.dart';
 import 'calendar_style.dart';
 import 'calendar_text.dart';
 import 'on_hover.dart';
@@ -8,6 +9,7 @@ import 'on_hover.dart';
 enum CalendarMonthOverviewDaySelect { middle, left, right, only, not }
 
 class CalendarMonthOverview<T extends CalendarEvent> extends StatefulWidget {
+  final CalendarEventProvider<T> eventProvider;
   final DateTime startShowingDate;
   final DateTime endShowingDate;
   final void Function(DateTime dayDate) onDayPressed;
@@ -17,6 +19,7 @@ class CalendarMonthOverview<T extends CalendarEvent> extends StatefulWidget {
     required this.onDayPressed,
     required this.startShowingDate,
     required this.endShowingDate,
+    required this.eventProvider,
   });
 
   @override
@@ -29,6 +32,7 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
   int currentYear = DateTime.now().year;
   int currentMonth = DateTime.now().month;
   DateTime? lastCurrentDate;
+  List<T> periodEvents = [];
 
   @override
   void initState() {
@@ -37,7 +41,32 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
       currentYear = widget.startShowingDate.year;
       currentMonth = widget.startShowingDate.month;
     }
+
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      fetchMonthEvents();
+    });
+  }
+
+  Future<void> fetchMonthEvents() async {
+    periodEvents = [];
+    var startWeekDate =
+        DateTime(currentYear, currentMonth).add(const Duration(days: 0));
+    var startDayDate =
+        startWeekDate.subtract(Duration(days: startWeekDate.weekday - 1));
+    var endWeekDate =
+        DateTime(currentYear, currentMonth).add(const Duration(days: 7 * 6));
+    var endDayDate =
+        endWeekDate.subtract(Duration(days: endWeekDate.weekday - 7));
+    endDayDate =
+        DateTime(endDayDate.year, endDayDate.month, endDayDate.day, 23, 59);
+
+    debugPrint("$startDayDate - $endDayDate");
+
+    periodEvents = await widget.eventProvider
+        .fetchEvents(context, startDayDate, endDayDate);
+
+    setState(() {});
   }
 
   void prevMonth() {
@@ -74,6 +103,11 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
   }
 
   bool dateHasEvent(DateTime date) {
+    for (var event in periodEvents) {
+      if (event.startDate.isSameDate(date)) {
+        return true;
+      }
+    }
     return false;
   }
 

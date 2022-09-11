@@ -1,6 +1,6 @@
 name: infobits_calendar
 description: Calendar package to give a quick and simple calendar
-version: 1.0.13
+version: 1.0.14
 homepage: "https://infobits.dk"
 
 environment:

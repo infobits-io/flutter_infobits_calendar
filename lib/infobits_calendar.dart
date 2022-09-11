@@ -288,6 +288,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                               onDayPressed: onOverviewDayPressed,
                               startShowingDate: startShowingDate,
                               endShowingDate: endShowingDate,
+                              eventProvider: widget.eventProvider,
                             ),
                           ),
                           Container(
@@ -405,6 +406,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
               onDayPressed: onOverviewDayPressed,
               startShowingDate: startShowingDate,
               endShowingDate: endShowingDate,
+              eventProvider: widget.eventProvider,
             ),
             if (widget.extraContent != null)
               SingleChildScrollView(
