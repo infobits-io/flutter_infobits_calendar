@@ -34,6 +34,7 @@ class Calendar<T extends CalendarEvent> extends StatefulWidget {
   final CalendarStyle<T> style;
   final CalendarText text;
   final void Function()? onCreatePressed;
+  final DateTime? startShowingDate;
 
   const Calendar({
     super.key,
@@ -45,6 +46,7 @@ class Calendar<T extends CalendarEvent> extends StatefulWidget {
     this.extraActions = const [],
     this.extraContent,
     this.onCreatePressed,
+    this.startShowingDate,
   });
 
   @override
@@ -65,8 +67,8 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
   void initState() {
     viewKey = GlobalKey(debugLabel: "calendar_view_key");
     overviewKey = GlobalKey(debugLabel: "calendar_overview_key");
-    startShowingDate = DateTime.now();
-    endShowingDate = DateTime.now();
+    startShowingDate = widget.startShowingDate ?? DateTime.now();
+    endShowingDate = widget.startShowingDate ?? DateTime.now();
     super.initState();
   }
 
