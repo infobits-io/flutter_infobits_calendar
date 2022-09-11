@@ -35,6 +35,7 @@ class Calendar<T extends CalendarEvent> extends StatefulWidget {
   final CalendarText text;
   final void Function()? onCreatePressed;
   final DateTime? startShowingDate;
+  final void Function(DateTime start, DateTime end)? onShowingUpdate;
 
   const Calendar({
     super.key,
@@ -47,6 +48,7 @@ class Calendar<T extends CalendarEvent> extends StatefulWidget {
     this.extraContent,
     this.onCreatePressed,
     this.startShowingDate,
+    this.onShowingUpdate,
   });
 
   @override
@@ -95,6 +97,10 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
 
     if (updateOverview) {
       overviewKey.currentState?.checkDaySelected(startDate, endDate);
+    }
+
+    if (widget.onShowingUpdate != null) {
+      widget.onShowingUpdate!(startDate, endDate);
     }
   }
 
