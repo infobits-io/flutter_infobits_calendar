@@ -6,6 +6,7 @@ class CalendarText {
   final String clickClose;
   final String overview;
   final String extra;
+  final String errorMessage;
 
   final String week;
   final CalendarTextWeekDays weekdays;
@@ -17,6 +18,7 @@ class CalendarText {
     this.clickClose = "Click to Close",
     this.overview = "Overview",
     this.extra = "Other",
+    this.errorMessage = "an error occurred",
     this.weekdays = const CalendarTextWeekDays(),
     this.months = const CalendarTextMonths(),
   });

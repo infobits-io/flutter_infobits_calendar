@@ -4,8 +4,8 @@ import 'calendar_event.dart';
 
 /// A data provider interface for the events
 abstract class CalendarEventProvider<T extends CalendarEvent> {
-  Future<void> init(BuildContext context) async {
-    return;
+  Future<bool> init(BuildContext context) async {
+    return true;
   }
 
   /// Fetch the events for the given date interval

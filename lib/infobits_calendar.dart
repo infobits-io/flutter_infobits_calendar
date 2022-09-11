@@ -441,34 +441,42 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
+    return FutureBuilder<bool>(
         future: widget.eventProvider.init(context),
         builder: (context, snapshot) {
-          return SafeArea(
-            top: true,
-            left: false,
-            right: false,
-            bottom: false,
-            child: InheritedCalendarStyle<T>(
-              style: widget.style,
-              child: InheritedCalendarText(
-                text: widget.text,
-                child: InheritedCalendarEventModalOptions<T>(
-                  options: widget.eventModalOptions,
-                  child: ResponsiveLayout(
-                    desktop: _buildLargeScreen(
-                        context, getView(widget.viewProvider.getType(context))),
-                    laptop: _buildLargeScreen(
-                        context, getView(widget.viewProvider.getType(context))),
-                    tablet: _buildSmallScreen(
-                        context, getView(widget.viewProvider.getType(context))),
-                    mobile: _buildSmallScreen(
-                        context, getView(widget.viewProvider.getType(context))),
+          if (snapshot.hasError) {
+            return Text(widget.text.errorMessage);
+          }
+
+          if (snapshot.hasData) {
+            return SafeArea(
+              top: true,
+              left: false,
+              right: false,
+              bottom: false,
+              child: InheritedCalendarStyle<T>(
+                style: widget.style,
+                child: InheritedCalendarText(
+                  text: widget.text,
+                  child: InheritedCalendarEventModalOptions<T>(
+                    options: widget.eventModalOptions,
+                    child: ResponsiveLayout(
+                      desktop: _buildLargeScreen(context,
+                          getView(widget.viewProvider.getType(context))),
+                      laptop: _buildLargeScreen(context,
+                          getView(widget.viewProvider.getType(context))),
+                      tablet: _buildSmallScreen(context,
+                          getView(widget.viewProvider.getType(context))),
+                      mobile: _buildSmallScreen(context,
+                          getView(widget.viewProvider.getType(context))),
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
+            );
+          }
+
+          return Container();
         });
   }
 }
