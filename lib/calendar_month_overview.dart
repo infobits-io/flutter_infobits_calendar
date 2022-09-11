@@ -66,6 +66,8 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
     periodEvents = await widget.eventProvider
         .fetchEvents(context, startDayDate, endDayDate);
 
+    debugPrint("overview events: ${periodEvents.length}");
+
     setState(() {});
   }
 
@@ -77,6 +79,7 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
         currentMonth = 12;
       }
     });
+    fetchMonthEvents();
   }
 
   void nextMonth() {
@@ -87,6 +90,7 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
         currentMonth = 1;
       }
     });
+    fetchMonthEvents();
   }
 
   void checkDaySelected(DateTime startDate, DateTime endDate) {
