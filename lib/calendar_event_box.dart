@@ -161,8 +161,6 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
 
     var modalOptions = CalendarEventModalOptions.of<T>(context);
 
-    debugPrint(modalOptions.infoEntryBuilders.length.toString());
-
     if (ScreenSizes.isMobile(context)) {
       showModalBottomSheet<void>(
           context: context,

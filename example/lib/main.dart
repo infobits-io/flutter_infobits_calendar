@@ -38,8 +38,15 @@ class TestEventProvider extends CalendarEventProvider<EventModel> {
         id: "123",
         title: "Test event 2",
         subtitle: "Subtitle 2",
-        startDate: DateTime(start.year, start.month, start.day, 13),
-        endDate: DateTime(start.year, start.month, start.day, 15),
+        startDate: DateTime(start.year, start.month, start.day, 16, 9, 7),
+        endDate: null,
+      ),
+      EventModel(
+        id: "123",
+        title: "Test event 2",
+        subtitle: "Subtitle 2",
+        startDate: DateTime(end.year, end.month, end.day, 13, 9, 7),
+        endDate: null,
       ),
     ];
   }
@@ -58,7 +65,6 @@ class App extends StatelessWidget {
           eventProvider: TestEventProvider(),
           viewProvider: CalendarViewProvider(
             mobileViewType: CalendarViewType.threeday,
-            desktopViewType: CalendarViewType.threeday,
           ),
           eventModalOptions: CalendarEventModalOptions(
             infoEntryBuilders: [
