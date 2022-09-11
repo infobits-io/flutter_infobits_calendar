@@ -44,106 +44,111 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
               cursor: SystemMouseCursors.click,
               child: LayoutBuilder(builder: (context, constraints) {
                 return OnHover(builder: (hover) {
-                  return AnimatedOpacity(
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.ease,
-                    opacity: hover ? 0.8 : 1,
-                    child: Container(
-                        height: height,
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 7, horizontal: 14),
-                        decoration: BoxDecoration(
-                          color: eventStyle.backgroundColor,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: FittedBox(
-                          alignment: Alignment.topCenter,
-                          clipBehavior: Clip.hardEdge,
-                          fit: BoxFit.none,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                width: constraints.maxWidth - 28,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if (event.endDate != null)
-                                      Expanded(
-                                        child: Text(
-                                          timePeriodString,
-                                          style: TextStyle(
-                                            color: eventStyle.color,
-                                            fontSize: 10,
-                                          ),
-                                          overflow: TextOverflow.fade,
-                                          softWrap: true,
-                                        ),
-                                      ),
-                                    if (event.endDate == null)
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 3),
-                                        child: Text(
-                                          timePeriodString,
-                                          style: TextStyle(
-                                            color: eventStyle.color,
-                                            fontSize: 10,
-                                          ),
-                                          overflow: TextOverflow.fade,
-                                          softWrap: true,
-                                        ),
-                                      ),
-                                    if (event.endDate == null)
-                                      Expanded(
-                                        child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5),
+                  return Container(
+                    color: calendarStyle.primaryColor,
+                    child: AnimatedOpacity(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease,
+                      opacity: hover ? 0.8 : 1,
+                      child: Container(
+                          height: height,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 7, horizontal: 14),
+                          decoration: BoxDecoration(
+                            color: eventStyle.backgroundColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: FittedBox(
+                            alignment: Alignment.topCenter,
+                            clipBehavior: Clip.hardEdge,
+                            fit: BoxFit.none,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: constraints.maxWidth - 28,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      if (event.endDate != null)
+                                        Expanded(
                                           child: Text(
-                                            event.title,
+                                            timePeriodString,
                                             style: TextStyle(
                                               color: eventStyle.color,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
+                                              fontSize: 10,
                                             ),
                                             overflow: TextOverflow.fade,
                                             softWrap: true,
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              if (event.endDate != null)
-                                SizedBox(
-                                  width: constraints.maxWidth - 28,
-                                  child: Text(
-                                    event.title,
-                                    style: TextStyle(
-                                      color: eventStyle.color,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    overflow: TextOverflow.fade,
-                                    softWrap: true,
+                                      if (event.endDate == null)
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(top: 3),
+                                          child: Text(
+                                            timePeriodString,
+                                            style: TextStyle(
+                                              color: eventStyle.color,
+                                              fontSize: 10,
+                                            ),
+                                            overflow: TextOverflow.fade,
+                                            softWrap: true,
+                                          ),
+                                        ),
+                                      if (event.endDate == null)
+                                        Expanded(
+                                          child: Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 5),
+                                            child: Text(
+                                              event.title,
+                                              style: TextStyle(
+                                                color: eventStyle.color,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                              overflow: TextOverflow.fade,
+                                              softWrap: true,
+                                            ),
+                                          ),
+                                        ),
+                                    ],
                                   ),
                                 ),
-                              (event.subtitle != null && event.endDate != null
-                                  ? SizedBox(
-                                      width: constraints.maxWidth - 28,
-                                      child: Text(
-                                        event.subtitle!,
-                                        style: TextStyle(
-                                          color: eventStyle.color,
-                                          fontSize: 13,
-                                        ),
-                                        overflow: TextOverflow.fade,
-                                        softWrap: true,
+                                if (event.endDate != null)
+                                  SizedBox(
+                                    width: constraints.maxWidth - 28,
+                                    child: Text(
+                                      event.title,
+                                      style: TextStyle(
+                                        color: eventStyle.color,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                    )
-                                  : Container())
-                            ],
-                          ),
-                        )),
+                                      overflow: TextOverflow.fade,
+                                      softWrap: true,
+                                    ),
+                                  ),
+                                (event.subtitle != null && event.endDate != null
+                                    ? SizedBox(
+                                        width: constraints.maxWidth - 28,
+                                        child: Text(
+                                          event.subtitle!,
+                                          style: TextStyle(
+                                            color: eventStyle.color,
+                                            fontSize: 13,
+                                          ),
+                                          overflow: TextOverflow.fade,
+                                          softWrap: true,
+                                        ),
+                                      )
+                                    : Container())
+                              ],
+                            ),
+                          )),
+                    ),
                   );
                 });
               }),
