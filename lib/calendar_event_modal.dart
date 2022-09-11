@@ -8,8 +8,9 @@ import 'calendar_text.dart';
 
 class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
   final T event;
-  final CalendarStyle style;
+  final CalendarStyle<T> style;
   final CalendarEventStyle eventStyle;
+  final CalendarText text;
   final CalendarEventModalOptions<T> options;
   final bool dialog;
 
@@ -19,6 +20,7 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     this.dialog = false,
     required this.style,
     required this.eventStyle,
+    required this.text,
     required this.options,
   });
 

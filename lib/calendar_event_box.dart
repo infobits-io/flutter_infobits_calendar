@@ -4,6 +4,7 @@ import 'calendar_event.dart';
 import 'calendar_event_modal.dart';
 import 'calendar_event_modal_options.dart';
 import 'calendar_style.dart';
+import 'calendar_text.dart';
 import 'on_hover.dart';
 import 'responsive_layout.dart';
 
@@ -156,8 +157,9 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
   }
 
   void openModal(BuildContext context) {
-    var calendarStyle = CalendarStyle.of<T>(context);
+    CalendarStyle<T> calendarStyle = CalendarStyle.of<T>(context);
     var eventStyle = calendarStyle.getEventStyle(event);
+    var calendarText = CalendarText.of(context);
 
     var modalOptions = CalendarEventModalOptions.of<T>(context);
 
@@ -181,6 +183,7 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
               event: event,
               style: calendarStyle,
               eventStyle: eventStyle,
+              text: calendarText,
               options: modalOptions,
             );
           });
@@ -201,6 +204,7 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
                 event: event,
                 style: calendarStyle,
                 eventStyle: eventStyle,
+                text: calendarText,
                 options: modalOptions,
                 dialog: true,
               )

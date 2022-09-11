@@ -42,7 +42,7 @@ class CalendarStyle<T extends CalendarEvent> {
     );
   }
 
-  static CalendarStyle of<T extends CalendarEvent>(BuildContext context) {
+  static CalendarStyle<T> of<T extends CalendarEvent>(BuildContext context) {
     final inheritedOptions =
         context.dependOnInheritedWidgetOfExactType<InheritedCalendarStyle<T>>();
     return inheritedOptions?.style ?? const CalendarStyle();
