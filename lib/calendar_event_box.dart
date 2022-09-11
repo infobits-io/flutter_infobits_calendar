@@ -45,7 +45,7 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
               child: LayoutBuilder(builder: (context, constraints) {
                 return OnHover(builder: (hover) {
                   return Container(
-                    color: calendarStyle.primaryColor,
+                    color: calendarStyle.primaryBackgroundColor,
                     child: AnimatedOpacity(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease,
