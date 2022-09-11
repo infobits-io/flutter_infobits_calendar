@@ -41,10 +41,9 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
       currentYear = widget.startShowingDate.year;
       currentMonth = widget.startShowingDate.month;
     }
-
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      fetchMonthEvents();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await fetchMonthEvents();
     });
   }
 
@@ -55,23 +54,19 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
     var startDayDate =
         startWeekDate.subtract(Duration(days: startWeekDate.weekday - 1));
     var endWeekDate =
-        DateTime(currentYear, currentMonth).add(const Duration(days: 7 * 6));
+        DateTime(currentYear, currentMonth).add(const Duration(days: 7 * 5));
     var endDayDate =
         endWeekDate.subtract(Duration(days: endWeekDate.weekday - 7));
     endDayDate =
         DateTime(endDayDate.year, endDayDate.month, endDayDate.day, 23, 59);
 
-    debugPrint("$startDayDate - $endDayDate");
-
     periodEvents = await widget.eventProvider
         .fetchEvents(context, startDayDate, endDayDate);
-
-    debugPrint("overview events: ${periodEvents.length}");
 
     setState(() {});
   }
 
-  void prevMonth() {
+  Future<void> prevMonth() async {
     setState(() {
       currentMonth--;
       if (currentMonth < 1) {
@@ -79,10 +74,10 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
         currentMonth = 12;
       }
     });
-    fetchMonthEvents();
+    await fetchMonthEvents();
   }
 
-  void nextMonth() {
+  Future<void> nextMonth() async {
     setState(() {
       currentMonth++;
       if (currentMonth > 12) {
@@ -90,7 +85,7 @@ class CalendarMonthOverviewState<T extends CalendarEvent>
         currentMonth = 1;
       }
     });
-    fetchMonthEvents();
+    await fetchMonthEvents();
   }
 
   void checkDaySelected(DateTime startDate, DateTime endDate) {
