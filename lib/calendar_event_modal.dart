@@ -26,12 +26,11 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var calendarText = CalendarText.of(context);
     var timePeriodString =
         "${event.startDate.toLocal().timeString}${event.endDate != null ? " - ${event.endDate!.toLocal().timeString}" : ""}";
 
     var fullPeriodString =
-        "$timePeriodString, ${calendarText.weekdays.weekday(event.startDate.toLocal())} ${event.startDate.toLocal().day}. ${calendarText.months.month(event.startDate.toLocal())}";
+        "$timePeriodString, ${text.weekdays.weekday(event.startDate.toLocal())} ${event.startDate.toLocal().day}. ${text.months.month(event.startDate.toLocal())}";
 
     List<Widget> modalChildren = [
       _buildModalRow(
