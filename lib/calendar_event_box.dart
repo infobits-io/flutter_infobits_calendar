@@ -47,10 +47,10 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
                 return OnHover(builder: (hover) {
                   return Container(
                     color: calendarStyle.primaryBackgroundColor,
-                    child: AnimatedOpacity(
+                    child: AnimatedScale(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease,
-                      opacity: hover ? 0.8 : 1,
+                      scale: hover ? 0.98 : 1,
                       child: Container(
                           height: height,
                           padding: const EdgeInsets.symmetric(

@@ -103,15 +103,37 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     }
 
     if (dialog) {
-      return Container(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-        decoration: BoxDecoration(
-            color: style.primaryBackgroundColor,
-            borderRadius: BorderRadius.circular(20)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: modalChildren,
-        ),
+      return Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            decoration: BoxDecoration(
+                color: style.primaryBackgroundColor,
+                borderRadius: BorderRadius.circular(20)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: modalChildren,
+            ),
+          ),
+          Positioned(
+            right: 10,
+            top: 10,
+            child: GestureDetector(
+              onTap: () => Navigator.of(context).pop(),
+              child: MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: Container(
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: style.secondaryBackgroundColor,
+                  ),
+                  child: style.icons.modalCloseIcon,
+                ),
+              ),
+            ),
+          )
+        ],
       );
     }
 
