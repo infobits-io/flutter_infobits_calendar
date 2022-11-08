@@ -337,6 +337,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
               child: Row(
                 children: [
                   Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: widget.style.icons.openDropdownIcon,
                   ),
                   //_leftButton(context),
