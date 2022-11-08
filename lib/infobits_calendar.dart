@@ -384,46 +384,48 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
 
   Widget _buildLargeScreen(BuildContext context, CalendarView view) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(
-        width: 250,
-        height: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        PrimaryButton<T>(
-                          icon: widget.style.icons.createIcon,
-                          text: widget.text.createText,
-                          onPressed: createEvent,
-                        ),
-                      ],
+      LayoutBuilder(builder: (context, constraints) {
+        return SizedBox(
+          width: 250,
+          height: constraints.maxHeight,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          PrimaryButton<T>(
+                            icon: widget.style.icons.createIcon,
+                            text: widget.text.createText,
+                            onPressed: createEvent,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  ...widget.extraActions
-                ],
+                    ...widget.extraActions
+                  ],
+                ),
               ),
-            ),
-            CalendarMonthOverview<T>(
-              key: overviewKey,
-              onDayPressed: onOverviewDayPressed,
-              startShowingDate: startShowingDate,
-              endShowingDate: endShowingDate,
-              eventProvider: widget.eventProvider,
-            ),
-            if (widget.extraContent != null)
-              SingleChildScrollView(
-                child: widget.extraContent!,
-              )
-          ],
-        ),
-      ),
+              CalendarMonthOverview<T>(
+                key: overviewKey,
+                onDayPressed: onOverviewDayPressed,
+                startShowingDate: startShowingDate,
+                endShowingDate: endShowingDate,
+                eventProvider: widget.eventProvider,
+              ),
+              if (widget.extraContent != null)
+                SingleChildScrollView(
+                  child: widget.extraContent!,
+                )
+            ],
+          ),
+        );
+      }),
       Expanded(
           child: Column(
         children: [
