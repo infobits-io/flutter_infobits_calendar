@@ -114,6 +114,8 @@ class _CalendarWorkweekViewState<T extends CalendarEvent>
               itemDate.subtract(Duration(days: itemDate.weekday - 1));
           var itemEndDate =
               itemStartDate.subtract(Duration(days: itemDate.weekday - 5));
+          itemEndDate = DateTime(
+              itemEndDate.year, itemEndDate.month, itemEndDate.day, 23, 59);
 
           final double width = constraints.maxWidth - 50;
           final double eventWidth = width / 5;
