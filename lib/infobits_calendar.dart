@@ -330,18 +330,26 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
           sizeCurve: Curves.ease,
           firstCurve: Curves.ease,
           secondCurve: Curves.ease,
-          firstChild: Row(
-            children: [
-              _leftButton(context),
-              Expanded(
-                child: CalendarTitle<T>(
-                  onPressed: () => toggleMonthOverview(),
-                  startShowingDate: startShowingDate,
-                  endShowingDate: endShowingDate,
-                ),
+          firstChild: GestureDetector(
+            onTap: () => toggleMonthOverview(),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Row(
+                children: [
+                  Container(
+                    child: widget.style.icons.openDropdownIcon,
+                  ),
+                  //_leftButton(context),
+                  Expanded(
+                    child: CalendarTitle<T>(
+                      startShowingDate: startShowingDate,
+                      endShowingDate: endShowingDate,
+                    ),
+                  ),
+                  //_rightButton(context),
+                ],
               ),
-              _rightButton(context),
-            ],
+            ),
           ),
           secondChild: GestureDetector(
             onTap: closeMonthOverview,
@@ -384,48 +392,45 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
 
   Widget _buildLargeScreen(BuildContext context, CalendarView view) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      LayoutBuilder(builder: (context, constraints) {
-        return SizedBox(
-          width: 250,
-          height: constraints.maxHeight,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          PrimaryButton<T>(
-                            icon: widget.style.icons.createIcon,
-                            text: widget.text.createText,
-                            onPressed: createEvent,
-                          ),
-                        ],
-                      ),
+      SizedBox(
+        width: 250,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        PrimaryButton<T>(
+                          icon: widget.style.icons.createIcon,
+                          text: widget.text.createText,
+                          onPressed: createEvent,
+                        ),
+                      ],
                     ),
-                    ...widget.extraActions
-                  ],
-                ),
+                  ),
+                  ...widget.extraActions
+                ],
               ),
-              CalendarMonthOverview<T>(
-                key: overviewKey,
-                onDayPressed: onOverviewDayPressed,
-                startShowingDate: startShowingDate,
-                endShowingDate: endShowingDate,
-                eventProvider: widget.eventProvider,
-              ),
-              if (widget.extraContent != null)
-                SingleChildScrollView(
-                  child: widget.extraContent!,
-                )
-            ],
-          ),
-        );
-      }),
+            ),
+            CalendarMonthOverview<T>(
+              key: overviewKey,
+              onDayPressed: onOverviewDayPressed,
+              startShowingDate: startShowingDate,
+              endShowingDate: endShowingDate,
+              eventProvider: widget.eventProvider,
+            ),
+            if (widget.extraContent != null)
+              SingleChildScrollView(
+                child: widget.extraContent!,
+              )
+          ],
+        ),
+      ),
       Expanded(
           child: Column(
         children: [
