@@ -386,6 +386,7 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
         width: 250,
+        height: double.infinity,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
