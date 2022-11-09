@@ -426,8 +426,10 @@ class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
               eventProvider: widget.eventProvider,
             ),
             if (widget.extraContent != null)
-              SingleChildScrollView(
-                child: widget.extraContent!,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: widget.extraContent!,
+                ),
               )
           ],
         ),

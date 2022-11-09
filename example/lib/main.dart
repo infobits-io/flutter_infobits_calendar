@@ -90,7 +90,30 @@ class App extends StatelessWidget {
           text: CalendarText(
             createText: "Hmmm",
           ),
-          extraContent: Text("Extra content"),
+          extraContent: Column(
+            children: [
+              Container(
+                height: 200,
+                color: Colors.amber,
+                margin: const EdgeInsets.all(10),
+              ),
+              Container(
+                height: 200,
+                color: Colors.amber,
+                margin: const EdgeInsets.all(10),
+              ),
+              Container(
+                height: 200,
+                color: Colors.amber,
+                margin: const EdgeInsets.all(10),
+              ),
+              Container(
+                height: 200,
+                color: Colors.amber,
+                margin: const EdgeInsets.all(10),
+              ),
+            ],
+          ),
           extraActions: [
             CalendarQuickAction(
               icon: Icon(Icons.settings),
