@@ -52,10 +52,10 @@ class Calendar<T extends CalendarEvent> extends StatefulWidget {
   });
 
   @override
-  State<Calendar> createState() => _CalendarState<T>();
+  State<Calendar> createState() => CalendarState<T>();
 }
 
-class _CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
+class CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
   bool monthDropdownOpen = false;
   bool dropdownShowingOverview = true;
   ScrollController dropdownScrollController = ScrollController();
