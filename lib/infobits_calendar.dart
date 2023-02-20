@@ -74,6 +74,11 @@ class CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
     super.initState();
   }
 
+  void refreshEvents() {
+    overviewKey.currentState?.fetchMonthEvents();
+    viewKey.currentState?.setState(() {});
+  }
+
   void createEvent() {
     if (widget.onCreatePressed != null) {
       widget.onCreatePressed!();
