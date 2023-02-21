@@ -86,11 +86,11 @@ class App extends StatelessWidget {
               }
             ],
             extraContentBuilder: (event, dialog) => Text("Test extra content"),
-            onEditPressed: (event) {
+            onEditPressed: (event) async {
               debugPrint("Edit pressed");
               return false;
             },
-            onDeletePressed: (event) {
+            onDeletePressed: (event) async {
               debugPrint("Delete pressed");
               return false;
             },

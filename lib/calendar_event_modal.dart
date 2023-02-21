@@ -24,25 +24,25 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     required this.options,
   });
 
-  void onClosePressed(BuildContext context) {
+  void onClosePressed(BuildContext context) async {
     if (options.onClosePressed != null) {
-      var close = options.onClosePressed!(event);
+      var close = await options.onClosePressed!(event);
       if (close) Navigator.of(context).pop();
     } else {
       Navigator.of(context).pop();
     }
   }
 
-  void onEditPressed(BuildContext context) {
+  void onEditPressed(BuildContext context) async {
     if (options.onEditPressed != null) {
-      var close = options.onEditPressed!(event);
+      var close = await options.onEditPressed!(event);
       if (close) Navigator.of(context).pop();
     }
   }
 
-  void onDeletePressed(BuildContext context) {
+  void onDeletePressed(BuildContext context) async {
     if (options.onDeletePressed != null) {
-      var close = options.onDeletePressed!(event);
+      var close = await options.onDeletePressed!(event);
       if (close) Navigator.of(context).pop();
     }
   }

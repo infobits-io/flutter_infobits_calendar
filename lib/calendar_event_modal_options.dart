@@ -8,9 +8,9 @@ class CalendarEventModalOptions<T extends CalendarEvent> {
   final List<Widget? Function(T event, bool dialog)> bottomActionBuilders;
   final Widget? Function(T event, bool dialog)? extraContentBuilder;
 
-  final bool Function(T event)? onClosePressed;
-  final bool Function(T event)? onEditPressed;
-  final bool Function(T event)? onDeletePressed;
+  final Future<bool> Function(T event)? onClosePressed;
+  final Future<bool> Function(T event)? onEditPressed;
+  final Future<bool> Function(T event)? onDeletePressed;
 
   const CalendarEventModalOptions({
     this.infoEntryBuilders = const [],
