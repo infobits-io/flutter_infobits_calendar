@@ -69,6 +69,8 @@ class CalendarIconsStyle {
   final Widget openDropdownIcon;
   final Widget modalBottomActionsIcon;
   final Widget modalCloseIcon;
+  final Widget modalEditIcon;
+  final Widget modalDeleteIcon;
 
   const CalendarIconsStyle({
     this.createIcon = const Icon(Icons.add),
@@ -80,6 +82,8 @@ class CalendarIconsStyle {
     this.openDropdownIcon = const Icon(Icons.arrow_drop_down_rounded),
     this.modalBottomActionsIcon = const Icon(Icons.link),
     this.modalCloseIcon = const Icon(Icons.close),
+    this.modalEditIcon = const Icon(Icons.edit),
+    this.modalDeleteIcon = const Icon(Icons.delete),
   });
 }
 

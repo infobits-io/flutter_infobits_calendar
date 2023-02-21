@@ -63,6 +63,7 @@ class App extends StatelessWidget {
         backgroundColor: Color(0xffffffff),
         body: Calendar<EventModel>(
           eventProvider: TestEventProvider(),
+          onCreatePressed: () => debugPrint("Create pressed"),
           viewProvider: CalendarViewProvider(
             mobileViewType: CalendarViewType.threeday,
           ),
@@ -85,6 +86,14 @@ class App extends StatelessWidget {
               }
             ],
             extraContentBuilder: (event, dialog) => Text("Test extra content"),
+            onEditPressed: (event) {
+              debugPrint("Edit pressed");
+              return false;
+            },
+            onDeletePressed: (event) {
+              debugPrint("Delete pressed");
+              return false;
+            },
           ),
           style: CalendarStyle(primaryColor: Colors.red),
           text: CalendarText(

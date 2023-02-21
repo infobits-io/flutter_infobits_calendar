@@ -24,6 +24,29 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     required this.options,
   });
 
+  void onClosePressed(BuildContext context) {
+    if (options.onClosePressed != null) {
+      var close = options.onClosePressed!(event);
+      if (close) Navigator.of(context).pop();
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
+  void onEditPressed(BuildContext context) {
+    if (options.onEditPressed != null) {
+      var close = options.onEditPressed!(event);
+      if (close) Navigator.of(context).pop();
+    }
+  }
+
+  void onDeletePressed(BuildContext context) {
+    if (options.onDeletePressed != null) {
+      var close = options.onDeletePressed!(event);
+      if (close) Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var timePeriodString =
@@ -116,23 +139,63 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 10,
-            top: 10,
-            child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: style.secondaryBackgroundColor,
+              right: 10,
+              top: 10,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (options.onDeletePressed != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 7),
+                      child: GestureDetector(
+                        onTap: () => onDeletePressed(context),
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: style.secondaryBackgroundColor,
+                            ),
+                            child: style.icons.modalDeleteIcon,
+                          ),
+                        ),
+                      ),
+                    ),
+                  if (options.onEditPressed != null)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 7),
+                      child: GestureDetector(
+                        onTap: () => onEditPressed(context),
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Container(
+                            padding: const EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: style.secondaryBackgroundColor,
+                            ),
+                            child: style.icons.modalEditIcon,
+                          ),
+                        ),
+                      ),
+                    ),
+                  GestureDetector(
+                    onTap: () => onClosePressed(context),
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: style.secondaryBackgroundColor,
+                        ),
+                        child: style.icons.modalCloseIcon,
+                      ),
+                    ),
                   ),
-                  child: style.icons.modalCloseIcon,
-                ),
-              ),
-            ),
-          )
+                ],
+              ))
         ],
       );
     }

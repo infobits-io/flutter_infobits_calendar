@@ -411,11 +411,12 @@ class CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        PrimaryButton<T>(
-                          icon: widget.style.icons.createIcon,
-                          text: widget.text.createText,
-                          onPressed: createEvent,
-                        ),
+                        if (widget.onCreatePressed != null)
+                          PrimaryButton<T>(
+                            icon: widget.style.icons.createIcon,
+                            text: widget.text.createText,
+                            onPressed: createEvent,
+                          ),
                       ],
                     ),
                   ),
