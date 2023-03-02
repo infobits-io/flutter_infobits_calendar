@@ -475,7 +475,7 @@ class CalendarState<T extends CalendarEvent> extends State<Calendar<T>> {
 
           if (snapshot.hasData) {
             return SafeArea(
-              top: true,
+              top: false,
               left: false,
               right: false,
               bottom: false,
