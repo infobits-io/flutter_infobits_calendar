@@ -41,6 +41,20 @@ class TestEventProvider extends CalendarEventProvider<EventModel> {
         startDate: DateTime(start.year, start.month, start.day + 1, 10),
         endDate: DateTime(start.year, start.month, start.day + 2, 12),
       ),
+      // EventModel(
+      //   id: "123",
+      //   title: "View change event end",
+      //   subtitle: "Subtitle",
+      //   startDate: DateTime(end.year, end.month, end.day, 9),
+      //   endDate: DateTime(end.year, end.month, end.day + 1, 9),
+      // ),
+      EventModel(
+        id: "123",
+        title: "View change event start",
+        subtitle: "Subtitle",
+        startDate: DateTime(start.year, start.month, start.day - 1, 9),
+        endDate: DateTime(start.year, start.month, start.day, 9),
+      ),
       EventModel(
         id: "123",
         title: "Test event 2",
@@ -48,13 +62,13 @@ class TestEventProvider extends CalendarEventProvider<EventModel> {
         startDate: DateTime(start.year, start.month, start.day, 16, 9, 7),
         endDate: null,
       ),
-      EventModel(
-        id: "123",
-        title: "Test event 2",
-        subtitle: "Subtitle 2",
-        startDate: DateTime(end.year, end.month, end.day, 13, 9, 7),
-        endDate: null,
-      ),
+      // EventModel(
+      //   id: "123",
+      //   title: "Test event 2",
+      //   subtitle: "Subtitle 2",
+      //   startDate: DateTime(end.year, end.month, end.day, 13, 9, 7),
+      //   endDate: null,
+      // ),
     ];
   }
 }

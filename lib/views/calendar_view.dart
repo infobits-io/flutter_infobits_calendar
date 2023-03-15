@@ -56,18 +56,26 @@ abstract class CalendarViewState<T extends CalendarEvent,
 
   void selectShowingPeriod(int index);
 
-  List<Widget> insertEventBox(T event, double eventWidth, double viewDays) {
+  List<Widget> insertEventBox({
+    required T event,
+    required double eventWidth,
+    required double viewDays,
+    required DateTime viewStart,
+    required DateTime viewEnd,
+  }) {
     var startDate = event.startDate.toLocal();
     var endDate = event.endDate?.toLocal() ?? startDate;
-    var startDay = event.startDate.toLocal().day;
     var days = endDate.difference(startDate).inDays + 1;
     List<Widget> eventBoxes = [];
     for (var i = 0; i < days; i++) {
       var eventBoxStartDate = startDate.add(Duration(days: i));
+      if (!(eventBoxStartDate.isAfter(viewStart) &&
+          eventBoxStartDate.isBefore(viewEnd))) {
+        continue;
+      }
+
       var startHour = days > 1 && i > 0 ? 0 : eventBoxStartDate.hour;
-      var endHour = days > 1 && i + 1 < days
-          ? 25
-          : (event.endDate?.toLocal().hour ?? startHour);
+      var endHour = days > 1 && i + 1 < days ? 25 : endDate.hour;
       var startMin = startDate.minute;
       var endMin = event.endDate?.toLocal().minute ?? (startMin + 30) % 60;
       double topOffset = startHour * 60 + startMin * 1.0 - 10;
@@ -75,10 +83,8 @@ abstract class CalendarViewState<T extends CalendarEvent,
       var duration = (endHour + endMin / 60) - (startHour + startMin / 60);
       double height = duration * 60;
 
-      if (event.startDate.weekday + i > 7) continue;
-
-      final left = (event.startDate.weekday + i - 1) * eventWidth;
-      final right = (viewDays - event.startDate.weekday - i) * eventWidth;
+      final left = (eventBoxStartDate.weekday - 1) * eventWidth;
+      final right = (viewDays - eventBoxStartDate.weekday) * eventWidth;
 
       eventBoxes.add(CalendarEventBox<T>(
         event: event,

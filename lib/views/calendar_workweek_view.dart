@@ -176,7 +176,13 @@ class _CalendarWorkweekViewState<T extends CalendarEvent>
                                 ),
                               ),
                             for (var event in snapshot.data ?? [])
-                              ...insertEventBox(event, eventWidth, 5)
+                              ...insertEventBox(
+                                event: event,
+                                eventWidth: eventWidth,
+                                viewDays: 5,
+                                viewStart: itemStartDate,
+                                viewEnd: itemEndDate,
+                              )
                             // CalendarEventBox<T>(
                             //   event: event,
                             //   left:

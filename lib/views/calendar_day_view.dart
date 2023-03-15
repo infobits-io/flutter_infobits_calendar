@@ -159,7 +159,13 @@ class _CalendarDayViewState<T extends CalendarEvent>
                                 ],
                               ),
                               for (var event in snapshot.data ?? [])
-                                ...insertEventBox(event, double.infinity, 1)
+                                ...insertEventBox(
+                                  event: event,
+                                  eventWidth: double.infinity,
+                                  viewDays: 1,
+                                  viewStart: itemStartDate,
+                                  viewEnd: itemEndDate,
+                                )
                               //CalendarEventBox<T>(event: event)
                             ])));
                   });

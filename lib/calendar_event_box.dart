@@ -26,7 +26,6 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var startDay = event.startDate.toLocal().day;
     var startHour = event.startDate.toLocal().hour;
     var endHour = event.endDate?.toLocal().hour ?? startHour;
     var startMin = event.startDate.toLocal().minute;
@@ -37,8 +36,6 @@ class CalendarEventBox<T extends CalendarEvent> extends StatelessWidget {
 
     var calendarStyle = CalendarStyle.of<T>(context);
     var eventStyle = calendarStyle.getEventStyle(event);
-
-    debugPrint("top: $top");
 
     return Positioned(
         top: top,
