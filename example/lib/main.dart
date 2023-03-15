@@ -36,6 +36,13 @@ class TestEventProvider extends CalendarEventProvider<EventModel> {
       ),
       EventModel(
         id: "123",
+        title: "Long event",
+        subtitle: "Subtitle",
+        startDate: DateTime(start.year, start.month, start.day + 1, 10),
+        endDate: DateTime(start.year, start.month, start.day + 2, 12),
+      ),
+      EventModel(
+        id: "123",
         title: "Test event 2",
         subtitle: "Subtitle 2",
         startDate: DateTime(start.year, start.month, start.day, 16, 9, 7),
