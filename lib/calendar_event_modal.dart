@@ -55,6 +55,14 @@ class CalendarEventModal<T extends CalendarEvent> extends StatelessWidget {
     var fullPeriodString =
         "$timePeriodString, ${text.weekdays.weekday(event.startDate.toLocal())} ${event.startDate.toLocal().day}. ${text.months.month(event.startDate.toLocal())}";
 
+    if (event.endDate != null && !event.startDate.isSameDate(event.endDate)) {
+      var startDateString =
+          "${event.startDate.toLocal().timeString} ${text.weekdays.weekday(event.startDate.toLocal())} ${event.startDate.toLocal().day}. ${text.months.month(event.startDate.toLocal())}";
+      var endDateString =
+          "${event.endDate!.toLocal().timeString} ${text.weekdays.weekday(event.endDate!.toLocal())} ${event.endDate!.toLocal().day}. ${text.months.month(event.endDate!.toLocal())}";
+      fullPeriodString = "$startDateString - $endDateString";
+    }
+
     List<Widget> modalChildren = [
       _buildModalRow(
         icon: Container(
