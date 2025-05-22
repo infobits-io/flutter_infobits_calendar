@@ -71,7 +71,7 @@ class _Calendar3DayViewState<T extends CalendarEvent>
   int lastIndex = 10000;
   double scrollOffset = (8 * 60) - 20;
   late ScrollController timestampController;
-  CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
   late SyncScrollController syncController;
 
   _Calendar3DayViewState(

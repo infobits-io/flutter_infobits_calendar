@@ -28,7 +28,8 @@ class _CalendarWeekViewState<T extends CalendarEvent>
     extends CalendarViewState<T, CalendarWeekView<T>> {
   int lastIndex = 10000;
   double scrollOffset = (8 * 60) - 20;
-  CarouselController carouselController = CarouselController();
+  late ScrollController scrollController;
+  CarouselSliderController carouselController = CarouselSliderController();
 
   _CalendarWeekViewState(
       {required super.startShowingDate, required super.endShowingDate});

@@ -29,7 +29,8 @@ class _CalendarDayViewState<T extends CalendarEvent>
     extends CalendarViewState<T, CalendarDayView<T>> {
   int lastIndex = 10000;
   double scrollOffset = (8 * 60) - 20;
-  CarouselController carouselController = CarouselController();
+  late ScrollController scrollController;
+  CarouselSliderController carouselController = CarouselSliderController();
 
   _CalendarDayViewState(
       {required super.startShowingDate, required super.endShowingDate});
